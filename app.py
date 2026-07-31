@@ -52,7 +52,8 @@ def create_gauge(value, title, max_val, color):
         mode="gauge+number",
         value=value,
         title={'text': title, 'font': {'size': 18, 'color': 'white'}},
-        number={'suffix': " °C", 'font': {'size': 36, 'color': 'white'}},
+        # 👇 Tambahkan 'valueformat': '.2f' di baris ini
+        number={'valueformat': '.2f', 'suffix': " °C", 'font': {'size': 36, 'color': 'white'}},
         gauge={
             'axis': {'range': [0, max_val], 'tickwidth': 1, 'tickcolor': "white"},
             'bar': {'color': color, 'thickness': 0.75},
@@ -71,7 +72,6 @@ def create_gauge(value, title, max_val, color):
         plot_bgcolor="rgba(0,0,0,0)"
     )
     return fig
-
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     # 4. BACA DATA DARI DICTIONARY GLOBAL
