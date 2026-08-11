@@ -26,9 +26,10 @@ def on_message(client, userdata, msg):
     print(f"📥 Data masuk dari MQTT: {payload}")
     try:
         data = payload.split(",")
-        if len(data) >= 2:
+        if len(data) >= 1:
             # 2. UPDATE KE DICTIONARY GLOBAL, BUKAN KE SESSION_STATE
-            sensor_data["suhu_dht22"] = float(data[1])
+            # Pakai suhu MENTAH (indeks 0), bukan suhuBlynk (indeks 1)
+            sensor_data["suhu_dht22"] = float(data[0])
         if len(data) >= 3:
             sensor_data["kelembapan"] = float(data[2])
         if len(data) >= 4:
@@ -48,6 +49,11 @@ def init_mqtt():
 
 # Jalankan MQTT
 client = init_mqtt()
+
+# --- KALIBRASI SUHU ---
+# Y = 30 + (10/7) * (X - 30)
+def kalibrasi_suhu(x):
+    return 30 + (10 / 7) * (x - 30)
 
 # --- UI KONDISI SENSOR ---
 st.markdown("### 🌱 Kondisi Sensor")
@@ -88,7 +94,7 @@ with col1:
 
 with col2:
     st.plotly_chart(
-        create_gauge(sensor_data["suhu_dht22"], "Suhu Udara (DHT22)", 50, "#00cc96", " °C"),
+        create_gauge(kalibrasi_suhu(sensor_data["suhu_dht22"]), "Suhu Udara (DHT22)", 50, "#00cc96", " °C"),
         width="stretch"
     )
 
