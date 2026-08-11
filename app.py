@@ -97,6 +97,7 @@ with col2:
         create_gauge(kalibrasi_suhu(sensor_data["suhu_dht22"]), "Suhu Udara (DHT22)", 50, "#00cc96", " °C"),
         width="stretch"
     )
+    st.caption(f"🔧 Debug — nilai mentah sensor: {sensor_data['suhu_dht22']:.2f} °C")
 
 with col3:
     st.plotly_chart(
