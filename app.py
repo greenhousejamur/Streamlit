@@ -88,7 +88,7 @@ with col1:
 
 with col2:
     st.plotly_chart(
-        create_gauge(sensor_data["suhu_dht22"] + 2.00, "Suhu Udara (DHT22)", 50, "#00cc96", " °C"),
+        create_gauge(sensor_data["suhu_dht22"] + 3.00, "Suhu Udara (DHT22)", 50, "#00cc96", " °C"),
         width="stretch"
     )
 
